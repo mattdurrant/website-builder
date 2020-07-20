@@ -1,0 +1,16 @@
+{
+  "name": "website-builder",
+  "version": "1.0.0",
+  "description": "Creates mattdurrant.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Durrant",
+  "license": "ISC",
+  "dependencies": {
+    "basic-ftp": "^4.0.1",
+    "moment": "^2.27.0",
+    "ora": "^3.0.0"
+  }
+}
