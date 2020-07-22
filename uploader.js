@@ -18,8 +18,7 @@ async function upload(fileName, filePath) {
         await client.upload(fs.createReadStream(filePath), fileName)
         spinner.succeed(`${fileName} uploaded.`)
     }
-    catch(err) {
-        console.log(err)
+    catch {
         spinner.fail(`${fileName} failed to upload.`)
     }   
     
