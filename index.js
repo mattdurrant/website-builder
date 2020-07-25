@@ -1,7 +1,7 @@
 const uploader        = require('./uploader.js')
 const output          = require('./output.js')
 const config          = require('./config.json')
-const eventRepository = require('./event-repository.js')
+const eventRepository = require('./event-repository.js') 
 
 ; (async () => {
   await start();

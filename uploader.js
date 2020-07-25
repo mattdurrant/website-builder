@@ -5,8 +5,7 @@ const ora       = require('ora')
 const config    = require('./config.json')
 
 async function upload(fileName, filePath) {
-    spinner   = ora(`Uploading ${fileName} via FTP.`).start()
-  
+   
     const client = new ftp.Client()
     try {
         await client.access({
@@ -15,11 +14,16 @@ async function upload(fileName, filePath) {
             password: config.website.ftp.password,
         })
         await client.cd(`public_html`)
+        spinner = ora(`Uploading ${fileName} via FTP.`).start()
         await client.upload(fs.createReadStream(filePath), fileName)
         spinner.succeed(`${fileName} uploaded.`)
+
+        spinner = ora(`Uploading styles.css via FTP.`).start()
+        await client.upload(fs.createReadStream("styles.css"), "styles.css")
+        spinner.succeed(`styles.css uploaded.`)
     }
     catch {
-        spinner.fail(`${fileName} failed to upload.`)
+        spinner.fail(`Files failed to upload.`)
     }   
     
     client.close()
