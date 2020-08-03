@@ -9,12 +9,6 @@ body
 	max-width: 800px;
 }
 
-img
-{
-    width: 10%;
-    vertical-align:middle;
-}
-
 a 
 {
 	color: rgb(87, 173, 104);
@@ -27,10 +21,14 @@ a
 	
 }
 
-time
+td
 {
-    padding-left: 30px;
-    padding-right: 20px;
+	vertical-align: top;
+}
+
+.noWrap
+{
+	white-space: nowrap;
 }
 
 a:hover 
@@ -50,4 +48,21 @@ footer
 {
     font-size: 12px;
     text-align: right;
+}
+
+img
+{
+	max-height: 100%;
+	max-width: 100%;
+	vertical-align:middle;
+}
+
+time {
+	margin-right: 20px;
+}
+
+@media only screen and (max-width: 900px) {
+	.time{
+		display: none;
+	}
 }

@@ -22,7 +22,8 @@ async function upload(fileName, filePath) {
         await client.upload(fs.createReadStream("styles.css"), "styles.css")
         spinner.succeed(`styles.css uploaded.`)
     }
-    catch {
+    catch(ex) {
+        console.log(ex)
         spinner.fail(`Files failed to upload.`)
     }   
     

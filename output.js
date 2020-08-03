@@ -3,17 +3,20 @@ const cheerio   = require('cheerio')
 const moment    = require('moment')
 
 async function writeToHtml(latestEvents) {
-    let eventsHtml = ''
+    let eventsHtml = "<table>"
     let lastDate = ''
     
     for (i = 0; i < latestEvents.length; i++) {
         let date = moment(latestEvents[i].timestamp)
         if (lastDate != date.startOf('date').toString()) {
             lastDate = date.startOf('date').toString()
-            eventsHtml += `<date> ${date.format('DD/MM/YY')}</date><br />` 
+            eventsHtml += `<tr><td class="date"><date>${date.format('DD/MM/YY')}</date></td>` 
+        }
+        else {
+            eventsHtml += `<tr><td class="date"></td>` 
         }
 
-        eventsHtml += `<time> ${(moment(latestEvents[i].timestamp)).format('hh:mm a')} </time> &nbsp; ${latestEvents[i].details} </br>`
+        eventsHtml += `<td class="time"><time class="noWrap"> ${(moment(latestEvents[i].timestamp)).format('hh:mm a')} </time></td><td>${latestEvents[i].details}</td></tr>`
     }
        
     let html = await buildHtml(eventsHtml)
