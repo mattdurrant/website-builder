@@ -21,6 +21,11 @@ a
 	
 }
 
+h1 a
+{
+	color: #454545;
+}
+
 td
 {
 	vertical-align: top;
@@ -64,5 +69,15 @@ time {
 @media only screen and (max-width: 900px) {
 	.time{
 		display: none;
+	}
+
+	h1,h2,h3,h4,h5,h6 
+	{
+		text-align: center;
+	} 
+
+	body
+	{
+		margin: 5px 5px 5px 5px;
 	}
 }

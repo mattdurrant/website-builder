@@ -16,7 +16,7 @@ async function writeToHtml(latestEvents) {
             eventsHtml += `<tr><td class="date"></td>` 
         }
 
-        eventsHtml += `<td class="time"><time class="noWrap"> ${(moment(latestEvents[i].timestamp)).format('hh:mm a')} </time></td><td>${latestEvents[i].details}</td></tr>`
+        eventsHtml += `<td class="time"><time class="noWrap"> ${(moment(latestEvents[i].timestamp)).format('hh:mm a')} </time></td><td>${unescape(latestEvents[i].details)}</td></tr>`
     }
        
     let html = await buildHtml(eventsHtml)
