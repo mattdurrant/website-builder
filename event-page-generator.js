@@ -2,7 +2,7 @@ const fs        = require('fs').promises;
 const cheerio   = require('cheerio')
 const moment    = require('moment')
 
-async function writeToHtml(latestEvents) {
+async function generate(filename, latestEvents) {
     let eventsHtml = "<table>"
     let lastDate = ''
     
@@ -20,19 +20,20 @@ async function writeToHtml(latestEvents) {
     }
        
     let html = await buildHtml(eventsHtml)
-    let filename = 'output.html'
-    fs.writeFile(filename, html)
-    return filename
+    let filepath = `generated-site/${filename}`
+    fs.writeFile(filepath, html)
+    return filepath
 }
 
 async function buildHtml(eventsHtml) {
     const html = await fs.readFile("template.html", "binary");
     const $ = cheerio.load(html)  
+    $('.stylesheetGoesHere').replaceWith('')
     $('.contentGoesHere').replaceWith(eventsHtml)
-    $('.renderedDataGoesHere').replaceWith(`${moment().format('DD/MM/YY hh:mm a')}`)
+    $('.renderedDateGoesHere').replaceWith(`${moment().format('DD/MM/YY hh:mm a')}`)
     return $.html()
 }
 
 module.exports = {
-    writeToHtml
+    generate
 }
