@@ -10,7 +10,7 @@ async function getLatestEvents() {
         database: config.mysql.database
     })
 
-    let results = await connection.query('SELECT * FROM `homepage`.`events` ORDER BY timestamp DESC LIMIT 20')
+    let results = await connection.query('SELECT * FROM `homepage`.`events` WHERE pinned = 1 UNION SELECT * FROM `homepage`.`events`  WHERE pinned = 0 ORDER BY TIMESTAMP DESC LIMIT 20')
     return results[0]
 }
 

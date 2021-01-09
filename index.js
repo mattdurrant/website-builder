@@ -3,6 +3,8 @@ const albumRepository     = require('./album-repository.js')
 const eventPageGenerator  = require('./event-page-generator.js')
 const eventRepository     = require('./event-repository.js')
 const uploader            = require('./uploader.js')
+const ebayRespository     = require('./ebay-repository.js')
+const ebayPageGenerator   = require('./ebay-page-generator.js')
 
 ;(async () => {
   await start();
@@ -10,19 +12,30 @@ const uploader            = require('./uploader.js')
 
 async function start() {
   try {
+    let latestEvents = await eventRepository.getLatestEvents()
+    await eventPageGenerator.generate('index.html', latestEvents)
+    await uploader.upload('index.html')
+
+    
+    // TODO: Copy files to generated-site.
+    await uploader.upload('styles.css')
+    await uploader.upload('vinyl.css')
+    await uploader.upload('albums.css')    
+
+    
+    let items = await ebayRespository.loadItems()
+    await ebayPageGenerator.generate('vinyl.html', items)
+    await uploader.upload(`vinyl.html`)
+   
     let albums = await albumRepository.loadAlbums()
     await albumPageGenerator.generate('albums.html', albums)
     await uploader.upload(`albums.html`)
 
-    for (let year = 2000; year <= 2020; year++) {
+    for (let year = 1990; year <= 2021; year++) {
       let albums = await albumRepository.loadAlbums(year)
       albumPageGenerator.generate(`albums/${year}.html`, albums, year)
       await uploader.upload(`albums/${year}.html`)
     }
-
-    let latestEvents = await eventRepository.getLatestEvents()
-    await eventPageGenerator.generate('index.html', latestEvents)
-    await uploader.upload('index.html')
 
     let latestRuns = await eventRepository.getLatestRuns()
     await eventPageGenerator.generate('runaround.html', latestRuns)
@@ -41,11 +54,8 @@ async function start() {
     await uploader.upload('phoneVideos.html')
 
     let dropboxTracks = await eventRepository.getLatestDropboxTracks()
-    await eventPageGenerator.generate('runaround.html', dropboxTracks)
+    await eventPageGenerator.generate('tracks.html', dropboxTracks)
     await uploader.upload('tracks.html')
-   
-    await uploader.uploadStylesheet()
-    await uploader.uploadAlbumStylesheet()
   }
   catch (ex) {
     console.log(ex)

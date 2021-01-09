@@ -1,0 +1,42 @@
+table
+{
+    border: 0;
+    border-spacing: 0;
+}
+
+tr:nth-child(even) 
+{
+    background: #F8F8F8;
+}
+
+td.cover 
+{
+    vertical-align: top;
+    text-align: center;
+}
+
+td
+{
+    padding-right: 10px;
+}
+
+div.buyItNow
+{
+    color: green; 
+    font-weight: bold;
+}
+
+div.auction
+{
+    color: red;
+}
+
+@media only screen and (max-width: 900px) {
+    th.endTimeColumn {
+        display: none;
+    }
+    
+    td.endTime{
+        display: none;
+    }
+}

@@ -18,7 +18,7 @@ async function generate(filename, albums, year = null) {
       albumsHtml += `<p><a href="../albums">All Time</a>`
     }
 
-    for (let y = 2000; y <= 2020; y++) {
+    for (let y = 2021; y >= 2000; y--) {
         if (year === null) {
           albumsHtml += ` || <a href="./albums/${y}">${y}</a>`
         } else {
@@ -109,6 +109,8 @@ async function getPlaylistId(year) {
         return '4eSeDm1JZLRz3LzTMIhuf4' 
       case (2020):
         return '4z9lCm8YGpqgTQPG4kV9bl'
+      case (2021):
+        return '1ALDWU2KkUqdoRMayO2OJW'
     }
   
     return null

@@ -8,7 +8,7 @@ async function generate(filename, latestEvents) {
     
     for (i = 0; i < latestEvents.length; i++) {
         let date = moment(latestEvents[i].timestamp)
-        if (lastDate != date.startOf('date').toString()) {
+        if (lastDate != date.startOf('date').toString() && latestEvents[i].pinned === 0) {
             lastDate = date.startOf('date').toString()
             eventsHtml += `<tr><td class="date"><date>${date.format('DD/MM/YY')}</date></td>` 
         }
@@ -16,7 +16,11 @@ async function generate(filename, latestEvents) {
             eventsHtml += `<tr><td class="date"></td>` 
         }
 
-        eventsHtml += `<td class="time"><time class="noWrap"> ${(moment(latestEvents[i].timestamp)).format('hh:mm a')} </time></td><td>${unescape(latestEvents[i].details)}</td></tr>`
+        if (latestEvents[i].pinned === 1) {
+            eventsHtml += `<td class="time"><time class="noWrap"></time></td><td><img class="gold-medal"> ${unescape(latestEvents[i].details)}</td></tr>`
+        } else {
+            eventsHtml += `<td class="time"><time class="noWrap"> ${(moment(latestEvents[i].timestamp)).format('hh:mm a')} </time></td><td>${unescape(latestEvents[i].details)}</td></tr>`
+        }
     }
        
     let html = await buildHtml(eventsHtml)

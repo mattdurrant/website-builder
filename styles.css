@@ -81,3 +81,11 @@ time {
 		margin: 5px 5px 5px 5px;
 	}
 }
+
+img.gold-medal 
+{
+    content:url(images/Pin.png);
+    vertical-align: "middle"; 
+    width: 32px;
+    alt: "Pinned";
+}

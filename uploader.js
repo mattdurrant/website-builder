@@ -47,65 +47,6 @@ async function upload(filePath) {
     }
 }
 
-async function uploadStylesheet() {
-    let retries = 1
-
-    await retry(async bail => {
-        const client = new ftp.Client()
-        
-        try {
-            await client.access({
-                host: config.website.ftp.host,
-                user: config.website.ftp.username,
-                password: config.website.ftp.password,
-            })
-            await client.cd(`public_html`)
-            spinner = ora(`Uploading stylesheet via FTP.`).start()
-            await client.upload(fs.createReadStream("styles.css"), "styles.css")
-            spinner.succeed(`styles.css uploaded (Attempt ${retries}).`)
-        } catch (exception) {
-            spinner.fail(`styles.css failed to upload (Attempt ${retries}).`)
-            retries++
-            throw exception
-        } finally {
-            client.close()
-        }
-      }, {
-        retries: 10
-    })    
-}
-
-async function uploadAlbumStylesheet() {
-    let retries = 1
-
-    await retry(async bail => {
-        const client = new ftp.Client()
-        
-        try {
-            await client.access({
-                host: config.website.ftp.host,
-                user: config.website.ftp.username,
-                password: config.website.ftp.password,
-            })
-            await client.cd(`public_html`)
-            
-            spinner = ora(`Uploading stylesheet via FTP.`).start()
-            await client.upload(fs.createReadStream("albums.css"), "albums.css")
-            spinner.succeed(`albums.css uploaded (Attempt ${retries}).`)
-        } catch (exception) {
-            spinner.fail(`albums.css failed to upload (Attempt ${retries}).`)
-            retries++
-            throw exception
-        } finally {
-            client.close()
-        }
-      }, {
-        retries: 10
-    })    
-}
-
 module.exports = {
-    upload,
-    uploadStylesheet,
-    uploadAlbumStylesheet
+    upload
 }
